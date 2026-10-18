@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/colorBackground">
+
+    <!-- Top Header Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_gemini"
+            app:tint="?attr/colorPrimary"
+            android:contentDescription="@string/gemini_assistant" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gemini_assistant"
+                android:fontFamily="@font/inter_font_family"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="?attr/colorOnSurface" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gemini_assistant_subtitle"
+                android:fontFamily="@font/inter_font_family"
+                android:textSize="12sp"
+                android:textColor="?attr/colorNoteIndicator" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/button_close"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_close"
+            app:tint="?attr/colorControlNormal"
+            android:contentDescription="@string/close" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorOutline" />
+
+    <!-- Suggestion Chips Horizontal Scroll -->
+    <HorizontalScrollView
+        android:id="@+id/scroll_suggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="12dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/layout_suggestion_chips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_grocery"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/chip_grocery_list"
+                app:chipCornerRadius="16dp"
+                app:chipStrokeWidth="1dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_packing"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/chip_packing_list"
+                app:chipCornerRadius="16dp"
+                app:chipStrokeWidth="1dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_todo"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/chip_daily_tasks"
+                app:chipCornerRadius="16dp"
+                app:chipStrokeWidth="1dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_brainstorm"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/chip_brainstorm"
+                app:chipCornerRadius="16dp"
+                app:chipStrokeWidth="1dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_meal_prep"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/chip_meal_prep"
+                app:chipCornerRadius="16dp"
+                app:chipStrokeWidth="1dp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Chat Messages List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_chat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:padding="12dp" />
+
+    <!-- Progress Indicator -->
+    <ProgressBar
+        android:id="@+id/progress_loading"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+    <!-- Bottom Message Input -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:background="?attr/colorBackground">
+
+        <EditText
+            android:id="@+id/edit_text_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/gemini_input_hint"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:background="@drawable/background_edit_text"
+            android:fontFamily="@font/inter_font_family"
+            android:textSize="14sp"
+            android:maxLines="4"
+            android:inputType="textMultiLine|textCapSentences" />
+
+        <ImageButton
+            android:id="@+id/button_send"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/state_imagebutton_background"
+            android:src="@drawable/ic_up"
+            app:tint="?attr/colorPrimary"
+            android:contentDescription="@string/send" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -18,6 +18,11 @@
                 android:icon="@drawable/ic_bin"
                 android:title="@string/nav_deleted"
                 android:orderInCategory="0"/>
+        <item
+                android:id="@+id/nav_gemini_ai"
+                android:icon="@drawable/ic_gemini"
+                android:title="@string/gemini_assistant"
+                android:orderInCategory="0"/>
     </group>
 
     <item

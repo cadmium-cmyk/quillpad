@@ -412,8 +412,23 @@ abstract class AbstractNotesFragment(@LayoutRes resId: Int) : BaseFragment(resId
     }
 
     protected fun toggleHiddenNotes() {
-        showHiddenNotes = !showHiddenNotes
-        setHiddenNotesItemActionText()
+        if (!showHiddenNotes) {
+            org.qosp.notes.ui.utils.BiometricAuthManager.authenticate(
+                fragment = this,
+                title = getString(R.string.unlock_hidden_notes_title),
+                subtitle = getString(R.string.unlock_hidden_notes_subtitle),
+                onSuccess = {
+                    showHiddenNotes = true
+                    setHiddenNotesItemActionText()
+                },
+                onError = { error ->
+                    android.widget.Toast.makeText(requireContext(), error, android.widget.Toast.LENGTH_SHORT).show()
+                }
+            )
+        } else {
+            showHiddenNotes = false
+            setHiddenNotesItemActionText()
+        }
     }
 
     fun setHiddenNotesItemActionText() {
@@ -481,11 +496,23 @@ abstract class AbstractNotesFragment(@LayoutRes resId: Int) : BaseFragment(resId
                     }
                 }
             }
-            action(R.string.action_show, R.drawable.ic_show, condition = note.isHidden) {
-                activityModel.showNotes(note)
+            action(R.string.action_show, R.drawable.ic_lock, condition = note.isHidden) {
+                org.qosp.notes.ui.utils.BiometricAuthManager.authenticate(
+                    fragment = this@AbstractNotesFragment,
+                    title = getString(R.string.unlock_note_title),
+                    subtitle = getString(R.string.unlock_note_subtitle),
+                    onSuccess = {
+                        activityModel.showNotes(note)
+                        sendMessage(getString(R.string.note_unlocked))
+                    },
+                    onError = { error ->
+                        android.widget.Toast.makeText(requireContext(), error, android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                )
             }
-            action(R.string.action_hide, R.drawable.ic_hidden, condition = !note.isHidden) {
+            action(R.string.action_hide, R.drawable.ic_lock, condition = !note.isHidden) {
                 activityModel.hideNotes(note)
+                sendMessage(getString(R.string.note_locked))
             }
             action(R.string.action_compact_preview, R.drawable.ic_preview, condition = !note.isCompactPreview) {
                 activityModel.makeNotesCompactPreview(note)

@@ -106,7 +106,10 @@ class NoteViewHolder(
     }
 
     private fun setTitle(note: Note) {
-        if (note.title.isEmpty()) {
+        if (note.isHidden) {
+            binding.textViewTitle.isVisible = true
+            binding.textViewTitle.text = note.title.ifBlank { context.getString(R.string.locked_note) }
+        } else if (note.title.isEmpty()) {
             binding.textViewTitle.isVisible = false
         } else {
             binding.textViewTitle.isVisible = true
@@ -115,6 +118,12 @@ class NoteViewHolder(
     }
 
     private fun setTextContent(note: Note) = with(binding) {
+        if (note.isHidden) {
+            textViewContent.isVisible = true
+            textViewContent.text = context.getString(R.string.locked_note_content_hidden)
+            return@with
+        }
+
         val showContent = !note.isList && note.content.isNotEmpty() && !note.isCompactPreview
         textViewContent.isVisible = showContent
 
@@ -137,6 +146,12 @@ class NoteViewHolder(
     }
 
     private fun setTasks(note: Note, useDiff: Boolean = true) = with(binding) {
+        if (note.isHidden) {
+            recyclerTasks.isVisible = false
+            indicatorMoreTasks.isVisible = false
+            return@with
+        }
+
         val showTasks = note.isList && note.taskList.isNotEmpty() && !note.isCompactPreview
         recyclerTasks.isVisible = showTasks
         indicatorMoreTasks.isVisible = false
@@ -156,6 +171,11 @@ class NoteViewHolder(
     }
 
     private fun setupAttachments(note: Note) = with(binding) {
+        if (note.isHidden) {
+            recyclerAttachments.isVisible = false
+            return@with
+        }
+
         val showAttachments = note.attachments.isNotEmpty() && !note.isCompactPreview
         recyclerAttachments.isVisible = showAttachments
         if (!showAttachments) return@with

@@ -2,11 +2,12 @@
 acra = "5.12.0"
 activityCompose = "1.10.1"
 activityKtx = "1.10.1"
-androidGradlePlugin = "9.3.1"
+androidGradlePlugin = "9.1.1"
 androidxComposeBom = "2025.07.00"
 androidxTest = "1.7.0"
 appcompat = "1.7.1"
 betterLinkMovementMethod = "2.2.0"
+biometric = "1.2.0-alpha05"
 coil = "2.7.0"
 coilGif = "2.7.0"
 coilVideo = "2.7.0"
@@ -45,6 +46,7 @@ retrofit = "3.0.0"
 retrofit2Converter = "1.0.0"
 room = "2.7.2"
 securityCrypto = "1.1.0"
+secretsGradlePlugin = "2.0.1"
 swiperefreshlayout = "1.1.0"
 work = "2.10.3"
 monitor = "1.8.0"
@@ -60,6 +62,7 @@ acra-sender-mail = { module = "ch.acra:acra-mail", version.ref = "acra" }
 acra-dialog = { module = "ch.acra:acra-dialog", version.ref = "acra" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
+androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
@@ -179,3 +182,4 @@ kotlinParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = 
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 navigationSafeArgs = { id = "androidx.navigation.safeargs", version.ref = "navigationSafeArgs" }
+secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }

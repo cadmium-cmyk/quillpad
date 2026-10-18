@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.navigationSafeArgs)
+    alias(libs.plugins.secrets)
 }
 
 // Do not use build-in kotlin until this issue is resolved:
@@ -59,8 +60,14 @@ android {
         includeInBundle = false
     }
 
-    if (project.hasProperty("keystore")) {
-        signingConfigs {
+    signingConfigs {
+        create("debugConfig") {
+            storeFile = file("${rootDir}/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+        if (project.hasProperty("keystore")) {
             create("release") {
                 val keystoreFileArg = project.property("keystore").toString()
                 val storePassArg = project.property("storepass").toString()
@@ -78,6 +85,7 @@ android {
         val testLabBuild = project.findProperty("TESTLAB_BUILD")?.toString() ?: "false"
 
         debug {
+            signingConfig = signingConfigs.getByName("debugConfig")
             buildConfigField("boolean", "TESTLAB_BUILD", testLabBuild)
         }
         release {
@@ -172,6 +180,7 @@ dependencies {
 
     // AndroidX
     implementation(libs.bundles.kotlin.androidX)
+    implementation(libs.androidx.biometric)
 
     implementation(libs.bundles.kotlin.deps)
 
@@ -240,4 +249,9 @@ dependencies {
     // Software Quality
     debugImplementation(libs.leakcanaryAndroid)
     implementation(libs.bundles.acra)
+}
+
+secrets {
+    propertiesFileName = ".env"
+    defaultPropertiesFileName = ".env.example"
 }

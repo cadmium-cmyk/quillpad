@@ -21,4 +21,9 @@
             android:title="@string/action_record_audio"
             android:icon="@drawable/ic_microphone"
             app:showAsAction="always"/>
+    <item
+            android:id="@+id/action_gemini_ai"
+            android:title="@string/gemini_assistant"
+            android:icon="@drawable/ic_gemini"
+            app:showAsAction="always"/>
 </menu>

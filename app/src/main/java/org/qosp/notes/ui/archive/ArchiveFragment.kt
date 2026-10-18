@@ -61,11 +61,31 @@ class ArchiveFragment : AbstractNotesFragment(R.layout.fragment_archive) {
     }
 
     override fun onNoteClick(noteId: Long, position: Int, viewBinding: LayoutNoteBinding) {
-        applyNavToEditorAnimation(position)
-        findNavController().navigateSafely(
-            ArchiveFragmentDirections.actionArchiveToEditor("editor_$noteId").setNoteId(noteId),
-            FragmentNavigatorExtras(viewBinding.root to "editor_$noteId")
-        )
+        val note = recyclerAdapter.getItemAtPosition(position)
+        if (note.isHidden && !activityModel.isNoteUnlocked(noteId)) {
+            org.qosp.notes.ui.utils.BiometricAuthManager.authenticate(
+                fragment = this,
+                title = getString(R.string.unlock_note_title),
+                subtitle = getString(R.string.unlock_note_subtitle),
+                onSuccess = {
+                    activityModel.unlockNote(noteId)
+                    applyNavToEditorAnimation(position)
+                    findNavController().navigateSafely(
+                        ArchiveFragmentDirections.actionArchiveToEditor("editor_$noteId").setNoteId(noteId),
+                        FragmentNavigatorExtras(viewBinding.root to "editor_$noteId")
+                    )
+                },
+                onError = { error ->
+                    android.widget.Toast.makeText(requireContext(), error, android.widget.Toast.LENGTH_SHORT).show()
+                }
+            )
+        } else {
+            applyNavToEditorAnimation(position)
+            findNavController().navigateSafely(
+                ArchiveFragmentDirections.actionArchiveToEditor("editor_$noteId").setNoteId(noteId),
+                FragmentNavigatorExtras(viewBinding.root to "editor_$noteId")
+            )
+        }
     }
 
     override fun onNoteLongClick(noteId: Long, position: Int, viewBinding: LayoutNoteBinding): Boolean {

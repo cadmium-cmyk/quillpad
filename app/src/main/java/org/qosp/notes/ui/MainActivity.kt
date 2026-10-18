@@ -361,6 +361,17 @@ class MainActivity : BaseActivity() {
             false // Returning true would cause the menu item to become checked.
             // We check the menu items only when the destination changes.
         }
+
+        binding.navigationView.menu.findItem(R.id.nav_gemini_ai)?.setOnMenuItemClickListener {
+            binding.drawer.closeAndThen {
+                openGeminiAssistant()
+            }
+            false
+        }
+    }
+
+    fun openGeminiAssistant() {
+        org.qosp.notes.ui.gemini.GeminiAssistantDialog.newInstance().show(supportFragmentManager, org.qosp.notes.ui.gemini.GeminiAssistantDialog.TAG)
     }
 
     private fun setupNavigation() {

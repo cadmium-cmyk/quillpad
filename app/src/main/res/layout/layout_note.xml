@@ -10,8 +10,8 @@
         app:cardBackgroundColor="?attr/colorNoteDefault"
         app:strokeWidth="1dp"
         app:strokeColor="@color/state_selected_note"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="6dp">
+        app:cardElevation="1dp"
+        app:cardCornerRadius="14dp">
 
     <LinearLayout
             android:id="@+id/linear_layout"
@@ -49,7 +49,7 @@
                     android:layout_height="@dimen/card_note_icon_size"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="4dp"
-                    android:src="@drawable/ic_hidden"
+                    android:src="@drawable/ic_lock"
                     android:visibility="gone"
                     style="@style/NoteIcon"/>
 

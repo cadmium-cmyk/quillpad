@@ -5,6 +5,12 @@
 
     <!-- Change editor between view and edit mode -->
     <item
+        android:id="@+id/action_gemini_assist"
+        android:icon="@drawable/ic_gemini"
+        android:title="@string/gemini_assistant"
+        android:visible="true"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/action_change_mode"
         android:icon="@drawable/ic_show"
         android:title="@string/action_change_mode"

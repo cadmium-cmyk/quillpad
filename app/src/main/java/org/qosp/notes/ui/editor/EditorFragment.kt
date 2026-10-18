@@ -406,8 +406,28 @@ class EditorFragment : BaseFragment(R.layout.fragment_editor) {
                     setupMenuItems(note, note.reminders.isNotEmpty())
                 }
 
+                R.id.action_gemini_assist -> {
+                    org.qosp.notes.ui.gemini.GeminiAssistantDialog.newInstance().show(parentFragmentManager, org.qosp.notes.ui.gemini.GeminiAssistantDialog.TAG)
+                }
+
                 R.id.action_hide_note -> {
-                    if (note.isHidden) activityModel.showNotes(note) else activityModel.hideNotes(note)
+                    if (note.isHidden) {
+                        org.qosp.notes.ui.utils.BiometricAuthManager.authenticate(
+                            fragment = this,
+                            title = getString(R.string.unlock_note_title),
+                            subtitle = getString(R.string.unlock_note_subtitle),
+                            onSuccess = {
+                                activityModel.showNotes(note)
+                                android.widget.Toast.makeText(requireContext(), getString(R.string.note_unlocked), android.widget.Toast.LENGTH_SHORT).show()
+                            },
+                            onError = { error ->
+                                android.widget.Toast.makeText(requireContext(), error, android.widget.Toast.LENGTH_SHORT).show()
+                            }
+                        )
+                    } else {
+                        activityModel.hideNotes(note)
+                        android.widget.Toast.makeText(requireContext(), getString(R.string.note_locked), android.widget.Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 R.id.action_do_not_sync -> {
@@ -794,6 +814,25 @@ class EditorFragment : BaseFragment(R.layout.fragment_editor) {
 
             // Update Title and Content only the first the since they are EditTexts
             if (isFirstLoad) {
+                if (data.note.isHidden && !activityModel.isNoteUnlocked(data.note.id)) {
+                    binding.scrollView.isVisible = false
+                    org.qosp.notes.ui.utils.BiometricAuthManager.authenticate(
+                        fragment = this@EditorFragment,
+                        title = getString(R.string.unlock_note_title),
+                        subtitle = getString(R.string.unlock_note_subtitle),
+                        onSuccess = {
+                            activityModel.unlockNote(data.note.id)
+                            binding.scrollView.isVisible = true
+                        },
+                        onError = { error ->
+                            android.widget.Toast.makeText(requireContext(), error, android.widget.Toast.LENGTH_SHORT).show()
+                            findNavController().navigateUp()
+                        },
+                        onCancel = {
+                            findNavController().navigateUp()
+                        }
+                    )
+                }
 
                 if (data.defaultEditorMode == DefaultEditorMode.EDIT) {
                     model.inEditMode = true

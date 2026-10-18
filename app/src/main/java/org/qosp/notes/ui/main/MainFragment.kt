@@ -149,7 +149,23 @@ open class MainFragment : AbstractNotesFragment(R.layout.fragment_main) {
         MainFragmentDirections.actionMainToSearch().setSearchQuery(searchQuery)
 
     override fun onNoteClick(noteId: Long, position: Int, viewBinding: LayoutNoteBinding) {
-        goToEditor(noteId, sharedElement = viewBinding.root, fromPosition = position)
+        val note = recyclerAdapter.getItemAtPosition(position)
+        if (note.isHidden && !activityModel.isNoteUnlocked(noteId)) {
+            org.qosp.notes.ui.utils.BiometricAuthManager.authenticate(
+                fragment = this,
+                title = getString(R.string.unlock_note_title),
+                subtitle = getString(R.string.unlock_note_subtitle),
+                onSuccess = {
+                    activityModel.unlockNote(noteId)
+                    goToEditor(noteId, sharedElement = viewBinding.root, fromPosition = position)
+                },
+                onError = { error ->
+                    android.widget.Toast.makeText(requireContext(), error, android.widget.Toast.LENGTH_SHORT).show()
+                }
+            )
+        } else {
+            goToEditor(noteId, sharedElement = viewBinding.root, fromPosition = position)
+        }
     }
 
     override fun onNoteLongClick(noteId: Long, position: Int, viewBinding: LayoutNoteBinding): Boolean {
@@ -254,6 +270,10 @@ open class MainFragment : AbstractNotesFragment(R.layout.fragment_main) {
                             takePhotoLauncher.launch(activityModel.createImageFile())
                         }.getOrElse { Log.e(TAG, "Cannot launch camera app", it) }
                     }
+                    true
+                }
+                R.id.action_gemini_ai -> {
+                    org.qosp.notes.ui.gemini.GeminiAssistantDialog.newInstance().show(parentFragmentManager, org.qosp.notes.ui.gemini.GeminiAssistantDialog.TAG)
                     true
                 }
                 else -> false

@@ -28,10 +28,10 @@ enum class ColorScheme(
     override val nameResource: Int,
     val styleResource: Int,
 ) : HasNameResource, HasSupportRequirement, EnumPreference by key("color_scheme") {
-    BLUE(R.string.preferences_color_scheme_blue, R.style.Blue) { override val isDefault = true },
+    BLUE(R.string.preferences_color_scheme_blue, R.style.Blue),
     // These two lines below are correct, but must be prefixed due to already existing lines
     TRUE_RED(R.string.preferences_color_scheme_red, R.style.Red),
-    TRUE_YELLOW(R.string.preferences_color_scheme_yellow, R.style.Yellow),
+    TRUE_YELLOW(R.string.preferences_color_scheme_yellow, R.style.Yellow) { override val isDefault = true },
     GREEN(R.string.preferences_color_scheme_green, R.style.Green),
     PINK(R.string.preferences_color_scheme_pink, R.style.Pink),
     // These two lines here are labeled incorrectly (should be labelled as ORANGE, PURPLE respectively)

@@ -62,6 +62,37 @@ class ActivityViewModel(
             )
 
     var showHiddenNotes: Boolean = false
+    private val unlockedNoteIds = mutableSetOf<Long>()
+    fun isNoteUnlocked(noteId: Long): Boolean = unlockedNoteIds.contains(noteId)
+    fun unlockNote(noteId: Long) { unlockedNoteIds.add(noteId) }
+    fun lockNote(noteId: Long) { unlockedNoteIds.remove(noteId) }
+
+    suspend fun createNoteWithTasks(title: String, tasks: List<String>): Long {
+        val taskObjects = tasks.mapIndexed { index, item ->
+            org.qosp.notes.data.model.NoteTask(id = index.toLong(), content = item, isDone = false)
+        }
+        val note = Note(
+            title = title,
+            content = "",
+            isList = true,
+            taskList = taskObjects,
+            creationDate = Instant.now().epochSecond,
+            modifiedDate = Instant.now().epochSecond
+        )
+        return noteRepository.insertNote(note)
+    }
+
+    suspend fun createTextNote(title: String, content: String): Long {
+        val note = Note(
+            title = title,
+            content = content,
+            isList = false,
+            creationDate = Instant.now().epochSecond,
+            modifiedDate = Instant.now().epochSecond
+        )
+        return noteRepository.insertNote(note)
+    }
+
     var notesToBackup: Set<Note>? = null
     var tempPhotoUri: Uri? = null
 

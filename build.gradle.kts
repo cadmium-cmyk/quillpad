@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlinParcelize) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.navigationSafeArgs) apply false
+    alias(libs.plugins.secrets) apply false
 }
 
 allprojects {

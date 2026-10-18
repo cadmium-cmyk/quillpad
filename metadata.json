@@ -1,0 +1,6 @@
+{
+  "name": "Notepad",
+  "description": "A Google Keep inspired smart note-taking app with Gemini AI assistance and biometric security",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

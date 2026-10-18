@@ -362,4 +362,39 @@
     <string name="note_untitled">Untitled</string>
     <string name="tasks">tasks</string>
     <string name="widget_no_pinned_notes">No pinned notes yet. Pin a note to see it here.</string>
+
+    <!-- Gemini Assistant Strings -->
+    <string name="gemini_assistant">Gemini Assistant</string>
+    <string name="gemini_assistant_subtitle">Generate checklists, notes &amp; brainstorm ideas</string>
+    <string name="gemini_ai">Gemini AI</string>
+    <string name="gemini_input_hint">Ask Gemini to create a list or note…</string>
+    <string name="chip_grocery_list">🛒 Grocery List</string>
+    <string name="chip_packing_list">🧳 Packing List</string>
+    <string name="chip_daily_tasks">✅ Daily To-Do</string>
+    <string name="chip_brainstorm">💡 Brainstorm</string>
+    <string name="chip_meal_prep">🍳 Meal Plan</string>
+    <string name="action_add_checklist">Save Checklist</string>
+    <string name="action_add_note">Save Note</string>
+    <string name="copy">Copy</string>
+    <string name="send">Send</string>
+    <string name="close">Close</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="note_created">Note created</string>
+
+    <!-- Biometric Authentication Strings -->
+    <string name="unlock_note_title">Unlock Note</string>
+    <string name="unlock_note_subtitle">Confirm fingerprint or device lock to view</string>
+    <string name="unlock_hidden_notes_title">Unlock Hidden Notes</string>
+    <string name="unlock_hidden_notes_subtitle">Confirm fingerprint or device lock to view hidden notes</string>
+    <string name="locked_note">Locked Note</string>
+    <string name="locked_note_content_hidden">🔒 Locked note — tap to unlock</string>
+    <string name="note_locked">Note locked securely</string>
+    <string name="note_unlocked">Note unlocked</string>
+    <string name="biometric_auth_title">Biometric Authentication</string>
+    <string name="biometric_auth_summary">Require fingerprint or device lock to access locked notes</string>
+    <string name="biometric_not_enrolled">No fingerprint or device lock enrolled on this device</string>
+    <string name="biometric_no_hardware">Biometric hardware is not available on this device</string>
+    <string name="biometric_hw_unavailable">Biometric hardware is currently unavailable</string>
+    <string name="biometric_unavailable">Biometric authentication is not available</string>
+    <string name="preferences_header_security">Security</string>
 </resources>
